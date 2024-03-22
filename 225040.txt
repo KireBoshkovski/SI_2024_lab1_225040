@@ -1,0 +1,99 @@
+mkdir SI_2024_lab1_225040
+cd SI_2024_lab1_225040
+git init 
+#kreiranje remote repo
+
+git remote add origin https://github.com/KireBoshkovski/SI_2024_lab1_225040.git
+#povrzuvanje na local so remote repoto
+
+echo "Kire Boshkovski 225040" >> README.md
+git add README.md
+git commit -m "Initial commit"
+#kreiranje i dodavanje na README file
+
+git add *.java
+git commit -m "Add starter code"
+#dodavanje na 3-te java fajlovi
+
+git fetch origin
+git push origin --all
+#sinhroniziranje na site granki so remote repo
+
+git branch bug1
+git branch bug2
+#otvaranje na 2 granki
+
+git checkout bug1
+#prefrlanje na HEAD na bug1
+
+git commit -am "Fix wrong condition in filterOddLengthStrings"
+#commit posle popravanje na greshkata vo Lab1_1
+
+git checkout bug2
+git commit -am "Fix wrong condition in makeBigStringFrom"
+#commit so popravka na Lab1_2
+
+git checkout bug1
+#se vrakjame na grankata bug1
+
+git commit -am "Call method filterOddLengthStrings in main class"
+#dodavanje kod vo main klasata so bug1 grankata
+
+git checkout bug2
+#prefrlanje na bug2 grankata
+
+git commit -am "Call method makeBigStringFrom in main class"
+#pravenje commit posle dodavanje na drug kod
+
+git checkout master
+#prefrlanje na grankata master
+
+git fetch origin
+git push origin --all
+#sinhroniziranje na lokalnoto so remote repoto
+
+git merge bug1
+git push origin -all
+#Fast-forward
+# SILab1Main.java | 1 +
+# SILab1_1.java   | 2 +-
+# 2 files changed, 2 insertions(+), 1 deletion(-)
+#spojuvanje na bug1 kon grankata master i sinhroniziranje so remote repo
+
+git checkout bug2
+git rebase master
+#se dobiva slednata poraka
+
+#CONFLICT (content): Merge conflict in SILab1Main.java
+
+#error: could not apply 5096a4b... Call method makeBigStringFrom in main class
+#hint: Resolve all conflicts manually, mark them as resolved with
+#hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+#hint: You can instead skip this commit: run "git rebase --skip".
+#hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+#Could not apply 5096a4b... Call method makeBigStringFrom in main class
+
+#da se spravime so ovoj konflikt go otvarame fajlot SILab1Main.java i gi brishime site <<<< >>> i ===== 
+#i gi ostavame 2 te linii koi pravat konflikt edna po druga
+
+git add SILab1Main.java
+git commit -m "Conflict resolved"
+#commit na resheniot konflikt
+
+git rebase --continue
+#Successfully rebased and updated refs/heads/bug2.
+#uspeshno reshen konflikt
+
+git checkout master
+git merge bug2
+#Updating ba62726..8c7a6aa
+#Fast-forward
+# SILab1Main.java | 3 ++-
+# SILab1_2.java   | 2 +-
+# 2 files changed, 3 insertions(+), 2 deletions(-)
+#uspeshno spojuvanje na bug2 kon master
+
+git push origin --all
+git push origin --force bug2
+
+git log > logs.txt
